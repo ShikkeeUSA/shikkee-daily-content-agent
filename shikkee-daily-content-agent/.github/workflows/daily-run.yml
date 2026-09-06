@@ -1,0 +1,42 @@
+name: Shikkee daily content run
+
+on:
+  schedule:
+    # 12:00 UTC every day -- adjust to whenever the team wants the pipeline to fire.
+    - cron: "0 12 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: pytest -q
+
+  # The actual daily content run needs live secrets and an LLM to do the
+  # research/copywriting step, so it's deliberately NOT wired to run
+  # unattended in CI yet -- run scripts/run_daily.py locally or from
+  # whatever agent environment does the research pass, with the secrets
+  # below available as environment variables.
+  #
+  # daily-run:
+  #   needs: run-tests
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.11"
+  #     - run: pip install -r requirements.txt
+  #     - run: playwright install chromium
+  #     - run: python scripts/run_daily.py
+  #       env:
+  #         AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+  #         METRICOOL_USER_TOKEN: ${{ secrets.METRICOOL_USER_TOKEN }}
+  #         WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+  #         HEYGEN_API_KEY: ${{ secrets.HEYGEN_API_KEY }}
+  #         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

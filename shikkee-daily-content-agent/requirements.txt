@@ -1,0 +1,8 @@
+requests>=2.31.0
+python-dotenv>=1.0.1
+slack_sdk>=3.27.0
+playwright>=1.44.0
+python-dateutil>=2.9.0
+google-api-python-client>=2.130.0
+google-auth>=2.29.0
+pytest>=8.2.0

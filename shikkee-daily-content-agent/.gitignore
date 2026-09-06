@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+output/
+*.mp4
+*.png
+!docs/**/*.png
+.DS_Store
